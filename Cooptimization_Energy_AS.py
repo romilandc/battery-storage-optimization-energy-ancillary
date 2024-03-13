@@ -93,7 +93,7 @@ def objective(model):
 model.objective = pyo.Objective(rule=objective, sense=pyo.maximize)
 
 # Solve the model
-solverpath_exe='C://Users//~//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe' #update with path to your solver
+solverpath_exe='C://Users//groutgauss//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
 solver = pyo.SolverFactory('glpk', executable=solverpath_exe)
 results = solver.solve(model, tee=False)
 
@@ -173,6 +173,8 @@ plt.xticks(rotation=45)
 plt.show()
 
 # Plot hourly and cumulative profit
+datetimes = merged_df['datetime'].to_list()
+
 fig, ax1 = plt.subplots(figsize=(15, 6))
 ax1.plot(datetimes, profit_by_hour, label="Hourly Profit", color="dodgerblue")
 ax1.set_xlabel("Time Step")
