@@ -40,11 +40,11 @@ so just two months of prices.  Note that CAISO also has AS prices called 'RegDow
 
 Running our script we see that "Total profit: $73016.37" with the following plots:
 
-# Battery State of Charge (SOC) which is the variation in battery level as we Buy & Sell
+## Battery State of Charge (SOC) which is the variation in battery level as we Buy & Sell
 ![Image1](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/batter_soc.png)
 
-# Buy and Sell decisions for each Product
+## Buy and Sell decisions for each Product
 ![Image2](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/Buy_Sell_per_Product.png)
 
-# Hourly and Cumulative Profit
+## Hourly and Cumulative Profit
 ![Image3](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/hourly_Cum_Profit.png)
