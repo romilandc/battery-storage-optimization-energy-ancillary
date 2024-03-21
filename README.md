@@ -1,4 +1,4 @@
-# Summary
+## Summary
 A co-optimization battery storage model between Energy and Ancillary Service (AS) products [RegUp, Spin, RegDown, NonSpin] that employs an operational trading strategy to maximize revenue by Buying and Selling each hour.  For optimization we use Pyomo for model setup (see below constraints) and GLPK for solver.  Feel free to switch solvers (like gurobi or CBC) if you like.
 
 We pull historical Energy and AS prices using the Gridstatus API (https://github.com/kmax12/gridstatus).  Append forecasted prices to the merged_df dataframe for a forecasted optimization.  Constraints described in the Cooptimization_Energy_As.py script are specified by the below assumptions:
