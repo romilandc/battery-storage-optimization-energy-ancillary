@@ -103,7 +103,7 @@ def objective(model):
 model.objective = pyo.Objective(rule=objective, sense=pyo.maximize)
 
 # Solve the model
-solverpath_exe='C://Users//groutgauss//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
+solverpath_exe='C://Users//~//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
 solver = pyo.SolverFactory('glpk', executable=solverpath_exe)
 results = solver.solve(model, tee=False)
 
