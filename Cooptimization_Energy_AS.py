@@ -97,15 +97,6 @@ def sell_positive(model, t, p, n):
 
 model.sell_positive = pyo.Constraint(model.t, model.p, model.n, rule=sell_positive)
 
-
-'''
-# Limit one buy or sell order per product per node per time slice
-def single_order(model, t, p, n):
-    return model.buy[t, p, n] + model.sell[t, p, n] <= 1
-
-model.single_order_constr = pyo.Constraint(model.t, model.p, model.n, rule=single_order)
-'''
-
 # OBJECTIVE DEFINITION
 def objective(model):
     profit = sum(
@@ -120,7 +111,7 @@ def objective(model):
 model.objective = pyo.Objective(rule=objective, sense=pyo.maximize)
 
 # Solve the model
-solverpath_exe='C://Users//groutgauss//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
+solverpath_exe='C://Users//~//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
 solver = pyo.SolverFactory('glpk', executable=solverpath_exe)
 results = solver.solve(model, tee=False)
 
