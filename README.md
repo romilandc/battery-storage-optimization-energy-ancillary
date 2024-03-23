@@ -40,11 +40,17 @@ so just two months of prices.  Note that CAISO also has AS prices called 'RegDow
 
 Running our script we see that "Total profit: $718,707" with the following plots:
 
+## Energy Prices
+![Image1](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/prices.png)
+
+## AS Prices
+![Image2](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/as.png)
+
 ## Battery State of Charge (SOC) which is the variation in battery level as we Buy & Sell
-![Image1](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/batter_soc.png)
+![Image3](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/batter_soc.png)
 
 ## Buy and Sell decisions for each Product
-![Image2](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/Buy_Sell_per_Product.png)
+![Image4](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/Buy_Sell_per_Product.png)
 
 ## Hourly and Cumulative Profit
-![Image3](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/hourly_Cum_Profit.png)
+![Image5](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/hourly_Cum_Profit.png)
