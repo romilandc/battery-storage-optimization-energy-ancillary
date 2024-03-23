@@ -26,7 +26,7 @@ We pull historical Energy and AS prices using the Gridstatus API (https://github
 - use git to clone repository `git clone https://github.com/romilan24/energy-ancillary-optimization`
 - type `pip install -r /path/to/requirements.txt` in cmd prompt
 - update path to local path where data is located
-- update path to your solver `line 96` on Cooptimization_Energy_AS.py
+- update path to your solver `line 114` on Cooptimization_Energy_AS.py
 - run script
 
 ## Example usecase
@@ -38,7 +38,7 @@ end_date = 'Mar-01-2024'
 
 so just two months of prices.  Note that CAISO also has AS prices called 'RegDownMileage' and 'RegUpMileage' which is the cost for cycling the unit but we're not considering this in our example.
 
-Running our script we see that "Total profit: $73016.37" with the following plots:
+Running our script we see that "Total profit: $718,707" with the following plots:
 
 ## Battery State of Charge (SOC) which is the variation in battery level as we Buy & Sell
 ![Image1](https://github.com/romilan24/energy-ancillary-optimization/blob/main/img/batter_soc.png)
