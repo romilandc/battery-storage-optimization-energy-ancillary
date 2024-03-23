@@ -33,6 +33,7 @@ for t in model.t:
 
 
 # Variables
+model.order = pyo.Var(model.t, model.p, model.n, within=pyo.Binary, initialize=0)
 model.buy = pyo.Var(model.t, model.p, model.n, bounds=(0, mcp), initialize=0)
 model.sell = pyo.Var(model.t, model.p, model.n, bounds=(0, mdp), initialize=0)
 model.C = pyo.Var(model.t, bounds=(0, mcp), initialize=mcp)  # Battery state of charge
@@ -73,11 +74,37 @@ def max_storage(model, t):
 
 model.max_storage_constr = pyo.Constraint(model.t, rule=max_storage)
 
+# Existing buy constraint (modify to use order variable)
+def buy_constraint(model, t, p, n):
+  return model.buy[t, p, n] <= mcp * model.order[t, p, n]
+
+model.buy_constr = pyo.Constraint(model.t, model.p, model.n, rule=buy_constraint)
+
+# Existing sell constraint (modify to use order variable)
+def sell_constraint(model, t, p, n):
+  return model.sell[t, p, n] <= mdp * (1 - model.order[t, p, n])
+
+model.sell_constr = pyo.Constraint(model.t, model.p, model.n, rule=sell_constraint)
+
+#Positive Buy/Sell values only
+def buy_positive(model, t, p, n):
+    return model.buy[t,p,n] >= 0
+
+model.buy_positive = pyo.Constraint(model.t, model.p, model.n, rule=buy_positive)
+ 
+def sell_positive(model, t, p, n):
+    return model.sell[t,p,n] >= 0
+
+model.sell_positive = pyo.Constraint(model.t, model.p, model.n, rule=sell_positive)
+
+
+'''
 # Limit one buy or sell order per product per node per time slice
 def single_order(model, t, p, n):
     return model.buy[t, p, n] + model.sell[t, p, n] <= 1
 
 model.single_order_constr = pyo.Constraint(model.t, model.p, model.n, rule=single_order)
+'''
 
 # OBJECTIVE DEFINITION
 def objective(model):
@@ -93,7 +120,7 @@ def objective(model):
 model.objective = pyo.Objective(rule=objective, sense=pyo.maximize)
 
 # Solve the model
-solverpath_exe='C://Users//~//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
+solverpath_exe='C://Users//groutgauss//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
 solver = pyo.SolverFactory('glpk', executable=solverpath_exe)
 results = solver.solve(model, tee=False)
 
@@ -155,6 +182,8 @@ plt.tight_layout()
 plt.show()
 
 # Plot Buy/Sell decisions for each product
+#max_scale = 2
+
 fig, axs = plt.subplots(nrows=len(model.p), ncols=1, figsize=(30, 6*len(model.p)), sharex=False)
 fig.suptitle("Buy/Sell Decisions for Each Product")
 
@@ -166,11 +195,13 @@ for i, p in enumerate(model.p):
     axs[i].set_title(f"Product: {p}")
     axs[i].set_xlabel("Time")
     axs[i].set_ylabel("Quantity (MWh)")
+    #axs[i].set_ylim(-max_scale, max_scale) 
     axs[i].legend()
 
 plt.tight_layout()
 plt.xticks(rotation=45)  
 plt.show()
+
 
 # Plot hourly and cumulative profit
 datetimes = merged_df['datetime'].to_list()
