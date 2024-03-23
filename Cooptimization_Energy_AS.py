@@ -135,24 +135,35 @@ merged_df = merged_df.drop(columns=['RegDownMileage', 'RegUpMileage']) # Remove 
 # Plotting
 plt.figure(figsize=(15, 6))
 
-# Plot each product's price
-products_to_plot = ['SP15', 'NonSpin', 'RegDown', 'RegUp', 'Spin']
-for product in products_to_plot:
-    plt.plot(merged_df['datetime'], merged_df[product], label=product)
-
-# Set labels and title
+# Plotting SP15 prices
+plt.figure(figsize=(15, 6))
+plt.plot(merged_df['datetime'], merged_df['SP15'], label='SP15', color='dodgerblue')
 plt.xlabel('Time')
-plt.ylabel('Prices ($/MWh)')
-plt.title('Energy & AS Prices')
+plt.ylabel('Energy Price @ SP15 ($/MWh)')
+plt.title('CAISO Energy LMP @ SP15')
 plt.xticks(rotation=45)
 plt.legend()
 plt.grid(True)
-
-# Show plot
 plt.tight_layout()
 plt.show()
 
-# Extract results
+# Plotting other AS prices
+plt.figure(figsize=(15, 6))
+other_as_prices = ['RegUp', 'Spin', 'NonSpin', 'RegDown', ]
+
+for price in other_as_prices:
+    plt.plot(merged_df['datetime'], merged_df[price], label=price)
+
+plt.xlabel('Time')
+plt.ylabel('AS Prices ($/MWh)')
+plt.title('CAISO Ancillary Service Prices')
+plt.xticks(rotation=45)
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+# Buy and Sell decision + Cumulative Profit
 buy_decisions = {}
 sell_decisions = {}
 battery_state = {}
