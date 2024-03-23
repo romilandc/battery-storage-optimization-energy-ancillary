@@ -4,12 +4,7 @@ import matplotlib.pyplot as plt
 
 #from pyomo import *
 from pull_prices import merged_df
-
-# Battery parameters
-mcp = 10  # Max Charge Power (MWh)
-mdp = 10  # Max Discharge Power (MWh)
-e = 0.80  # Round trip efficiency
-fee = 1  # Trade fees on both Buy and Sell trades ($/MWh)
+from params import mcp, mdp, e, fee, nodes, products
 
 # Read the data (replace with your actual data loading logic)
 merged_df["datetime"] = pd.to_datetime(merged_df["datetime"])
@@ -17,11 +12,7 @@ merged_df["datetime"] = pd.to_datetime(merged_df["datetime"])
 # Define sets and parameters
 model = pyo.ConcreteModel()
 
-T = len(merged_df)  # Number of time steps
-products = ["SP15", "RegUp", "Spin", "RegDown", "NonSpin"]
-nodes = ["TH_SP15_GEN-APND"]  # Replace with actual node list
-
-model.t = pyo.Set(initialize=range(1, T + 1))
+model.t = pyo.Set(initialize=range(1, len(merged_df) + 1))
 model.p = pyo.Set(initialize=products)
 model.n = pyo.Set(initialize=nodes)
 
@@ -97,6 +88,7 @@ def sell_positive(model, t, p, n):
 
 model.sell_positive = pyo.Constraint(model.t, model.p, model.n, rule=sell_positive)
 
+
 # OBJECTIVE DEFINITION
 def objective(model):
     profit = sum(
@@ -111,7 +103,7 @@ def objective(model):
 model.objective = pyo.Objective(rule=objective, sense=pyo.maximize)
 
 # Solve the model
-solverpath_exe='C://Users//~//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
+solverpath_exe='C://Users//groutgauss//anaconda3//pkgs//glpk-5.0-h8ffe710_0//Library//bin//glpsol.exe'
 solver = pyo.SolverFactory('glpk', executable=solverpath_exe)
 results = solver.solve(model, tee=False)
 
@@ -135,6 +127,30 @@ else:
     
     
 ##Plots and Analysis
+
+#Prices
+merged_df['datetime'] = pd.to_datetime(merged_df['datetime'])
+merged_df = merged_df.drop(columns=['RegDownMileage', 'RegUpMileage']) # Remove 'RegDownMileage' and 'RegUpMileage' columns
+
+# Plotting
+plt.figure(figsize=(15, 6))
+
+# Plot each product's price
+products_to_plot = ['SP15', 'NonSpin', 'RegDown', 'RegUp', 'Spin']
+for product in products_to_plot:
+    plt.plot(merged_df['datetime'], merged_df[product], label=product)
+
+# Set labels and title
+plt.xlabel('Time')
+plt.ylabel('Prices ($/MWh)')
+plt.title('Energy & AS Prices')
+plt.xticks(rotation=45)
+plt.legend()
+plt.grid(True)
+
+# Show plot
+plt.tight_layout()
+plt.show()
 
 # Extract results
 buy_decisions = {}

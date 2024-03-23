@@ -2,23 +2,23 @@ import gridstatus
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from params import locations, start_date, end_date
+from params import nodes, start_date, end_date
 
 # Initialize
 iso = gridstatus.CAISO()
 lmp_final = pd.DataFrame()
 as_final = pd.DataFrame()
 
-def get_lmp_data(start, end, locations):
+def get_lmp_data(start, end, nodes):
     """
     Function to retrieve LMP data from CAISO.
     :param start: Start date (pandas Timestamp)
     :param end: End date (pandas Timestamp)
-    :param locations: List of location strings
+    :param nodes: List of location strings
     :return: DataFrame with LMP data
     """
     
-    lmp = iso.get_lmp(start=start, end=end, market="DAY_AHEAD_HOURLY", locations=locations, sleep=3)
+    lmp = iso.get_lmp(start=start, end=end, market="DAY_AHEAD_HOURLY", locations=nodes, sleep=3)
     
     lmp_final = lmp.copy()
     lmp_final['Time'] = pd.to_datetime(lmp_final['Time'], utc=True)
@@ -59,17 +59,17 @@ def get_as_prices_data(start_date, end_date):
     }, inplace=True)
     return as_final
 
-def get_merged_data(start_date, end_date, locations):
+def get_merged_data(start_date, end_date, nodes):
     """
     Function to get merged LMP and AS prices data.
     :param start: Start date (pandas Timestamp) for LMP data
     :param end: End date (pandas Timestamp) for LMP data
-    :param locations: List of location strings for LMP data
+    :param nodes: List of location strings for LMP data
     :param start_date: Start date (string) for AS prices data
     :param end_date: End date (string) for AS prices data
     :return: DataFrame with merged LMP and AS prices data
     """
-    lmp_final = get_lmp_data(start_date, end_date, locations)
+    lmp_final = get_lmp_data(start_date, end_date, nodes)
     as_final = get_as_prices_data(start_date, end_date)
 
     merged_df = pd.merge(lmp_final, as_final, on='datetime', how='inner')
@@ -84,4 +84,4 @@ def get_merged_data(start_date, end_date, locations):
     return merged_df
 
 
-merged_df = get_merged_data(start_date, end_date, locations)
+merged_df = get_merged_data(start_date, end_date, nodes)
