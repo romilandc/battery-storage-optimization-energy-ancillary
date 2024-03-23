@@ -41,7 +41,7 @@ so just two months of prices.  Note that CAISO also has AS prices called 'RegDow
 Running our script we see that "Total profit: $718,707" with the following plots:
 
 ## Energy Prices
-![Image1](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/prices.png)
+![Image1](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/energ)
 
 ## AS Prices
 ![Image2](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/as.png)
