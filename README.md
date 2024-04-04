@@ -22,7 +22,7 @@ We pull historical Energy and AS prices using the Gridstatus API (https://github
 - Cannot partcipate in multiple products at same time
 
 ## How to use
-- create virtual environment using conda, .venv, or Docker container
+- create virtual environment using conda or .venv
 - use git to clone repository `git clone https://github.com/romilan24/battery-storage-optimization-energy-ancillary`
 - type `pip install -r /path/to/requirements.txt` in cmd prompt
 - update path to local path where data is located
