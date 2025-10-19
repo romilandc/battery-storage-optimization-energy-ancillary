@@ -38,7 +38,7 @@ end_date = 'Mar-01-2024'
 
 so just two months of prices.  Note that CAISO also has AS prices called 'RegDownMileage' and 'RegUpMileage' which is the cost for cycling the unit but we're not considering this in our example.
 
-Running our script we see that "Total profit: $718,707" with the following plots:
+Running our script we see that "Total profit: $102,349.83" with the following plots:
 
 ## Energy Prices
 ![Image1](https://github.com/romilan24/battery-storage-optimization-energy-ancillary/blob/main/img/energy.png)
